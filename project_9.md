@@ -28,4 +28,34 @@ Verify Jenkins up and running
 ```bash
 systemctl status jenkins
 ```
+
 ![Aws EC2 Jenkins Instance](./images/4.png)
+
+By default Jenkins server uses TCP port 8080 – Let's open it by creating a new Inbound Rule in your EC2 Security Group
+
+![Aws EC2 Jenkins Instance](./images/5.png)
+
+Let's setup Jenkins - from the broswer, use the jenkins instance public Ip:8080
+
+![Aws EC2 Jenkins Instance](./images/6.png)
+
+To get the administrator's password
+
+```bash
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+
+![Aws EC2 Jenkins Instance](./images/7.png)
+
+Enter the password and click on continue
+
+![Aws EC2 Jenkins Instance](./images/8.png)
+
+Click on the ```install suggested plugins``` , once installation is completed, you would be required to create an admin account aand you will get your Jenkins server address.
+![Aws EC2 Jenkins Instance](./images/10.png)
+
+Jenkins setp is complete
+![Aws EC2 Jenkins Instance](./images/11.png)
+
+Configure Jenkins to retrieve source codes from GitHub using Webhooks
+
