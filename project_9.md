@@ -168,9 +168,19 @@ Verify a successful and automically build in Jenkins
 
 
 Verify the files was succesfully updated in ```/mnt/apps``` 
+
+```bash
+ls /mnt/apps
+```
+
 ![Aws EC2 Jenkins Instance](./images/35.png)
 
 Check the changes in README.md file
+
+```bash
+cat /mnt/apps/README.md
+```
+
 ![Aws EC2 Jenkins Instance](./images/36.png)
 
 ✨✔️ ✔️
