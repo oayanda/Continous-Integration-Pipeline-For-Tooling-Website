@@ -113,3 +113,64 @@ ls /var/lib/jenkins/jobs/tooling-github/builds/2/archive/
 ![Aws EC2 Jenkins Instance](./images/26.png)
 
 ## CONFIGURE JENKINS TO COPY FILES TO NFS SERVER VIA SSH
+
+Currently, the artifacts is stored in Jenkins but in order to implement a Jenkins CI it needs to be in the NFS Server to serve data to the Web Servers - by so doing, any changes made in the version control system (GitHub) would automatically update the Web Servers.
+
+The next step is to copy them to the NFS server ```/mnt/apps``` directory.
+
+To do this securely in Jenkins, I would install a plugin called ```Publish Over SSH```
+
+On the main dashboard click ```Manage Jenkins``` and select ```Manage Plugins```
+
+![Aws EC2 Jenkins Instance](./images/27.png)
+
+Click on Available and search for ```Publish Over SSH``` select and install without restart
+![Aws EC2 Jenkins Instance](./images/28.png)
+
+Now, let's Configure the job/project to copy artifacts over to NFS server.
+
+On main dashboard select ```Manage Jenkins``` and choose ```Configure System``` menu item.
+
+Scroll down to Publish over SSH plugin configuration section and configure it to be able to connect to your NFS server
+
+1.  Provide a private key (content of .pem file that you use to connect to NFS server via SSH).
+
+*Add the Passphrase if the private key is configured with one.*
+
+2. Click on ```SSH Servers``` to expand and file the required details, Test configuration and save.
+
+> Hostname – can be private IP address of your NFS server
+
+> Username – ec2-user (since NFS server is based on EC2 with RHEL 8)
+
+> Remote directory – /mnt/apps since our Web Servers use it as a mointing point to retrieve files from the NFS server.
+
+![Aws EC2 Jenkins Instance](./images/29.png)
+
+![Aws EC2 Jenkins Instance](./images/30.png)
+
+open Jenkins job/project configuration page and add another one ```Post-build Action```
+
+Click on ```Add post-build action``` and select ```Send build artifacts over SSH```
+Configure it to send all ```( denoted by ** )``` files probuced by the build into our previouslys define remote directory.
+
+Save this configuration 
+
+![Aws EC2 Jenkins Instance](./images/31.png)
+Now, lets verify - change something in README.MD file in the GitHub Tooling repository.
+![Aws EC2 Jenkins Instance](./images/32.png)
+
+Login into the NFS Server instance and change the permission to allow Jenkins to save files in the /mnt directory.
+![Aws EC2 Jenkins Instance](./images/33.png)
+
+Verify a successful and automically build in Jenkins
+![Aws EC2 Jenkins Instance](./images/34.png)
+
+
+Verify the files was succesfully updated in ```/mnt/apps``` 
+![Aws EC2 Jenkins Instance](./images/35.png)
+
+Check the changes in README.md file
+![Aws EC2 Jenkins Instance](./images/36.png)
+
+✨✔️ ✔️
