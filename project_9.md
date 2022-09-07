@@ -104,3 +104,12 @@ You can build ```#2```was done automatically with the webhook setup
 ![Aws EC2 Jenkins Instance](./images/24.png)
 for more details, click build ```#2``` and check the console output
 ![Aws EC2 Jenkins Instance](./images/25.png)
+
+By default, the artifacts are stored on Jenkins server locally
+
+```bash
+ls /var/lib/jenkins/jobs/tooling-github/builds/2/archive/
+```
+![Aws EC2 Jenkins Instance](./images/26.png)
+
+## CONFIGURE JENKINS TO COPY FILES TO NFS SERVER VIA SSH
